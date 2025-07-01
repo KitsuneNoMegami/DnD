@@ -1,0 +1,26 @@
+xx. Afficher le charactère
+xx. Crée la carte d'un donjon: un rectangle dont les dimensions sont comprises entre 15 et 25 cases
+xx. positionne des obstacles sur la carte: cases où les joueurs et les monstres ne pourront pas se déplacer
+xx. crée les monstres
+xx. et choisit leurs caractéristiques
+xx. positionne les joueurs et les monstres sur la carte (en-dehors des obstacles)
+xx. positionne des équipements sur la carte que les joueurs pourront récupérer
+xx. Le DM choisit la position de tout
+xx. présente en quelques phrases le contexte aux joueurs
+xx. Main erreur d'exception
+xx. A demander :
+xx. corriger la liste des items et comment acceder aux coordonnées
+xx. Creer ToString pour toutes les classes Passer stats de Charactere et Monstre dans Entity
+xx. Créer les monstres par défaut
+xx. Se déplacer en mettant lettre puis chiffre
+xx. Equiper un équipement en début de donjon
+xx. Choisir l'équipement dans l'inventaire avec un chiffre
+xx. Constructeur a moitié vide pour le monstre
+xx. Items placed on items not checked
+xx. Le dm peut intéragir avec n'importe quelle entité du jeu
+xx. Définir un max de joueurs
+xx. Légende a la map
+xx. Classe affichage map
+xx. Enum getTYpe
+xx. Duplication personnage
+100. Commentaires

@@ -1,0 +1,302 @@
+@startuml
+'https://plantuml.com/class-diagram
+scale 0.85
+skinparam classFontStyle Bold
+skinparam style strictuml
+skinparam linetype ortho
+skinparam roundcorner 20
+skinparam shadowing true
+hide empty members
+left to right direction
+
+
+class Main{
+    + {static} void main(args: String[*])
+}
+
+package game <<frame>> #lightGray{
+
+        package utils{
+            class Utils{
+                + {static} allItems : Equipment[*]
+                + {static} allPlayers : GameCharacter[*]
+                + {static} allMonsters : Monster[*]
+                + {static} rollDice(number: Integer, face: Integer): Integer
+            }
+
+            class ItemsRepository{
+                + {static} additem(item: Equipment)
+                + {static} getAllItems(item: Equipment)
+                + {static} getItemByName(name: String): Equipment
+            }
+        }
+
+        class Game{
+            - _turn: Integer
+            + <<create>> Game()
+            + createGame()
+            + showTurn()
+            + play()
+        }
+
+        class DM{
+            - _obstacles: Integer[*]
+            + <<create>> DM()
+            + initialisePlayers()
+            - createPlayer(scanner: Scanner, playerNumber: Integer): GameCharacter
+            - chooseRace(scanner: Scanner):Race
+            - chooseClass(scanner: Scanner):Group
+            + createMonster(name: String, pseudo String, number Integer, life : Integer, strength Integer,\n dexterity Integer, speed Integer, initiative Integer, armorPoints Integer,\nattackRange Integer, attack Integer)
+            + iniEntitiesOrder(): Entity[*]
+            + createDefaultBoard()
+            + createBoard()
+            + showBoard()
+            + displayMap()
+            + checkEndCondition(): boolean
+            + getDungeon(): Dungeon
+            + getEntities(): Entity[*]
+            + <<override>>toString(): String
+            }
+
+
+
+        class Dungeon{
+            -_map: String[][]
+            -_height: Integer
+            -_width: Integer
+            -_dicoItemsPosition: int[]
+            + <<create>> Dungeon(height: Integer, width: Integer)
+            - initialiseMap()
+            - addItem(items: String,x: Integer, y: Integer)
+            + isValidPosition(x: Integer, y: Integer): Boolean
+            + isFree( x: Integer, y: Integer): Boolean
+            + addObstacle(x: Integer, y: Integer, obstaclesList : int[,])
+            + removeObstacle(x: Integer, y: Integer, obstaclesList : int[,])
+            + createDefaultObstacles(obstaclesList : int[,])
+            + setDefaultItemsPosition(itemsList : int[,])
+            + setDefaultMonstersPosition()
+            + setDefaultPlayersPosition()
+            + addObstaclesInteractive(scanner: Scanner, obstaclesList : int[,])
+            + addItemsInteractive(scanner: Scanner, itemsList : int[,])
+            + addMonstersInteractive(scanner: Scanner)
+            + addPlayersInteractive(scanner: Scanner)
+            + setObstacles(obstaclesList : int[,])
+            + setPlayers(playersList : GameCharacter[*])
+            + setItems()
+            + setMonsters()
+            + collectEquipment(player: GameCharacter)
+            + getItemsPosition(): int[]
+            + getEquipment(): Equipment[*]
+            + getPlayersCoordinates(playersList : GameCharacter[*]): int[,]
+            + getMap(): String[][]
+            + <<override>>toString(): String
+        }
+
+    package items #BUSINESS {
+                    class Equipment <<abstract>> {
+                        - _name: String
+                        + <<create>>Equipment( name: String)
+                        + getName (): String
+                        + <<override>>toString(): String
+                    }
+
+
+                    abstract Armor <<abstract>> extends Equipment {
+                    -_armorPoints: Integer
+                    + <<create>> Armor(name: String, armorPoints: Integer,Stats bonus)
+                    }
+
+                        class LArmor extends Armor {
+                        + <<create>> LArmor(name: String, armorPoints: Integer)
+                        +<<override>> toString(): String
+                        }
+
+                        class HArmor extends Armor {
+                        + <<create>> HArmor(name: String, armorPoints: Integer)
+                        +<<override>> toString(): String
+                        }
+
+                    abstract Weapon <<abstract>> extends Equipment {
+                    - _range: Integer
+                    - _damage: Integer
+                    +<<create>>Weapon(name: String, damage: Integer,\nrange: Integer)
+                    }
+
+                        class ComMelee extends Weapon {
+                        +<<create>>ComMelee(name: String, damage: Integer,\n range: Integer)
+                        +<<override>> toString(): String                        
+                        }
+
+                        class WarMelee extends Weapon {
+                        +<<create>>WarMelee(name: String, damage: Integer,\nrange: Integer)
+                        +<<override>> toString(): String
+                        }
+
+                        class Ranged extends Weapon {
+                        +<<create>>Ranged(name: String, damage: Integer,\nrange: Integer)
+                        +<<override>> toString(): String
+                        }
+                }
+
+    package entities <<frame>> #b7fffc {
+            class Stats #Bisque{
+                - _life: Integer
+                - _strength: Integer
+                - _dexterity: Integer
+                - _speed: Integer
+                - _initiative: Integer
+                + <<create>> Stats(life: Integer, strength: Integer, dexterity: Integer,\n speed: Integer, initiative: Integer)
+                + <<create>> Stats(life: integer)
+                + <<create>> Stats()
+                + add(other: Stats)
+                + remove(other: Stats)
+                + getLife(): Integer
+                + getStrength(): Integer
+                + getDexterity(): Integer
+                + getSpeed(): Integer
+                + getInitiative(): Integer
+                + <<override>>toString(): String
+            }
+
+        class Entity <<abstract>> {
+        - _x: Integer
+        - _y: Integer
+        # _pseudo: String
+        # <<create>>Entity(pseudo: String,stats: Stats)
+        + {abstract} turn(dungeon: Dungeon)
+        + {abstract} attack(dungeon: Dungeon)
+        + {abstract} getName(): String
+        +move()
+        +getX(): Integer
+        +getY(): Integer
+        }
+        class Monster extends Entity {
+                - _species : String
+                - _number: Integer
+                - _armorPoints: Integer
+                + <<create>> Monster(specie: String, number: Integer,life Integer,\nstrength Integer, dexterity Integer,\n speed Integer, initiative Integer, armorPoints Integer,\nweaponName String, range Integer, attack Integer)
+                + move(dungeon: Dungeon)
+                + setNumber(number: Integer)
+                + getNumber(): Integer
+                + <<override>> toString(): String
+                + <<override>> turn(dungeon: Dungeon)
+                + <<override>> attack(dungeon: Dungeon)
+                + <<override>> getName(): String
+        }
+
+            class GameCharacter extends Entity {
+                - _name : String
+                + <<create>> GameCharacter(name: String, race: Race, group: Group,\nstats: Stats, weapon: Weapon, armor: Armor)
+                + move(dungeon: Dungeon)
+                + addEquipment (equipment: String)
+                + equip (equipment: String)
+                + unequip (equipment: String)
+                + getRace(): String
+                + getGroup(): String
+                + getStats(): Stats
+                + get Weapon(): Weapon
+                + get Armor(): Armor
+                + getEquipment(): Equipment[*]
+                + <<override>>toString(): String
+                + <<override>> turn(dungeon: Dungeon)
+                + <<override>> attack(dungeon: Dungeon)
+                + <<override>> getName(): String
+            }
+
+            package races <<rectangle>> #TECHNOLOGY {
+                abstract Race <<abstract>> {
+                    - _name: String
+                    # <<create>> Race(name: String)
+                    + getName(): String
+                    + getStats() : Stats
+                    + <<override>>toString(): String
+                }
+                class Dwarf extends Race {
+                    + <<create>> Dwarf()
+                    + <<override>>toString(): String
+                }
+
+                class Human extends Race {
+                    + <<create>> Human()
+                    + <<override>>toString(): String
+                }
+
+                class Elf extends Race {
+                    + <<create>> Elf()
+                    + <<override>>toString(): String
+                }
+
+                class Halfling extends Race {
+                    + <<create>> Halfling()
+                    + <<override>>toString(): String
+                }
+
+            }
+            package groups <<rectangle>> #MediumSlateBlue {
+                abstract Group <<abstract>> {
+                    - _name: String
+                    # <<create>> Group(name: String, bonus: Stats)
+                    + getStats() : Stats
+                    + getName() : String
+                    + getEquipment() : Equipment[*]
+                    + addEquipment(equipment: String)
+                    + <<override>>toString(): String
+                }
+
+                class Warrior extends Group {
+                    + <<create>> Warrior()
+                    + <<override>>toString(): String
+                }
+
+                class Cleric extends Group {
+                    + <<create>> Clerk()
+                    + <<override>>toString(): String
+                }
+
+                class Wizard extends Group {
+                    + <<create>> Wizard()
+                    + <<override>>toString(): String
+                }
+
+                class Rogue extends Group {
+                    + <<create>> Rogue()
+                    + <<override>>toString(): String
+                }
+            }
+        }
+
+
+    }
+
+    Main *..> Game : "> create"
+
+    Game "1\n -_dm" *-> DM : "> create"
+    Game "1\n -_currentEntity" *--> Entity : "> has"
+
+    DM "1\n _dungeon" *-> Dungeon : "> create"
+    DM "1\n _entities[*]" o--> Entity : "> possess"
+    DM "<<uses>>"..>Equipment
+
+    GameCharacter "1\n-_armor" o-> Armor : "> wear"
+    GameCharacter "1\n -_race" o-> Race : "> is"
+    GameCharacter "1\n -_group" o--> Group : "> is"
+
+    GameCharacter "1\n-_equipments[*]" o-> Equipment : "> has"
+    Group "1\n-_equipments[*]" o-> Equipment : "> possess"
+    ItemsRepository"1\n-_items[*]" *-> Equipment : "> has"
+
+    Monster "1\n-_stats" *--> Stats : "> possess"
+    Race "1\n-_bonus" *-> Stats : "> has bonus"
+    Group "1\n-_bonus" *-> Stats : "> has bonus"
+    Weapon"1\n-_bonus" *-> Stats : "> has bonus"
+    Armor"1\n-_bonus" *-> Stats : "> has bonus"
+
+    GameCharacter"<<uses>>"..> Utils
+
+    Stats "1\n #_stats" <-* Entity : "< possess"
+    Weapon "1\n #_weapon" <-o Entity: "< use"
+    'Je suis obligé de le faire dans ce sens sinon il y a un problème
+
+
+}
+@enduml
