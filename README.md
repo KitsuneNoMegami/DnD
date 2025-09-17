@@ -39,7 +39,6 @@ This project implements a single- or multi-player DnD-like experience entirely i
    javac -d bin src/*.java
    java -cp bin Main
    ```
-   > Replace `Main` with your main class if it has a different name.
 
 3. **Follow the prompts in the console to create your character and begin your adventure!**
 
