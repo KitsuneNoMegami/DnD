@@ -6,6 +6,8 @@ A console-based Java game inspired by Dungeons & Dragons (DnD). Players can crea
 
 This project implements a single- or multi-player DnD-like experience entirely in the console. Players navigate through three different dungeons, making choices, fighting enemies, and managing their character's progression.
 
+<img width="400" height="350" alt="image" src="https://github.com/user-attachments/assets/7604aebf-c1c8-4833-b29e-5e02eaf236b6" />
+
 ## Features
 
 - Console-based gameplay
@@ -28,6 +30,8 @@ This project implements a single- or multi-player DnD-like experience entirely i
 
 ### Running the Game
 
+#### In a terminal 
+
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/KitsuneNoMegami/DnD.git
@@ -39,8 +43,18 @@ This project implements a single- or multi-player DnD-like experience entirely i
    javac -d bin src/*.java
    java -cp bin Main
    ```
+#### An other way 
 
-3. **Follow the prompts in the console to create your character and begin your adventure!**
+You can use an IDE like IntelliJ to make the launching easier or make sur to have all the pretty colors
+   1. **Clone the repository too:**
+      ```bash
+      git clone https://github.com/KitsuneNoMegami/DnD.git
+      cd DnD
+      ```
+   2. **Launch your IDE and start the main file**
+
+      
+4. **Follow the prompts in the console to create your character and begin your adventure!**
 
 ## Contributing
 
@@ -49,6 +63,16 @@ Contributions are welcome! If you have ideas, improvements, or bug fixes, feel f
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## Gitignore
+A `.gitignore` file is included to keep compiled classes and IDE/project files out of version control. Typical entries are:
+```
+bin/
+*.class
+*.log
+*.iml
+.idea/
+```
 
 ## Acknowledgements
 
