@@ -1,3 +1,4 @@
+Pour la version Française [![fr](https://img.shields.io/badge/Fr-8Db6C7.svg)](./README.fr.md)
 # DnD
 
 A console-based Java game inspired by Dungeons & Dragons (DnD). Players can create a character and embark on an adventure through 3 unique dungeons, facing monsters, challenges, and collecting treasures along the way.
